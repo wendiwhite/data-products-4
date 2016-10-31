@@ -1,0 +1,57 @@
+Reproducible Pitch
+========================================================
+author: Wendi White
+date: October 30, 2016
+autosize: true
+
+Overview
+========================================================
+
+This was developed to meet the requirements laid out in the Developing Data Products course as part of the Coursera Data Science Specialization.
+
+The Shiny app developed for the first part of the assignment is available here: <https://wendiwhite.shinyapps.io/ShinyApp/>
+
+The source code for the app is available on GitHub at: <https://github.com/wendiwhite/data-products-4>
+
+Shiny app functionality
+========================================================
+
+The app provides an interface for exploring the `quakes` dataset.
+
+It has widgets to allow you to slice the data based on:
+- depth (km)
+- magnitude (Richter)
+
+Each data point can be selected and it's depth and magnitude can be seen.
+
+The app also features a color coded scale for magnitude for which the legend can be toggled.
+
+Quakes Dataset
+========================================================
+
+The data set give the locations of 1000 seismic events of MB > 4.0. The events occurred in a cube near Fiji since 1964. Let's look at the summary.
+
+```{r}
+summary(quakes)
+```
+
+Summary
+========================================================
+
+We can see that the strongest correlation exists between magnitude and number of stations. (The stronger the quake, the more stations detect it.)
+
+```{r, echo=FALSE}
+panel.cor <- function(x, y, digits=2, prefix="", ...)
+{
+    usr <- par("usr"); on.exit(par(usr))
+    par(usr = c(0, 1, 0, 1))
+    r <- abs(cor(x, y))
+    txt <- format(c(r, 0.123456789), digits=digits)[1]
+    txt <- paste(prefix, txt, sep="")
+    text(0.5, 0.5, txt)
+}
+pairs(~mag+depth+lat+long+stations, data=quakes,
+      lower.panel=panel.smooth, upper.panel=panel.cor, 
+      pch=20, main="Quakes Scatterplot Matrix")
+
+```
